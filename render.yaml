@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: repforge
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ZA_API_BASE
+        value: https://zeroauthoritydao.com/api
+      - key: ZA_MCP_URL
+        value: https://zeroauthoritydao.com/mcp
