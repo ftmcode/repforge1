@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 /* -----------------------------
-   BASIC MIDDLEWARE ONLY
+   BASIC MIDDLEWARE
 ------------------------------*/
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,22 +31,22 @@ if (process.env.MONGODB_URI) {
 }
 
 /* -----------------------------
-   SIMPLE HOME ROUTE (IMPORTANT)
+   HOME ROUTE (CRITICAL FIX)
 ------------------------------*/
-app.get('/', (req, res) => {
-  res.send('🔥 RepForge is LIVE on Render');
+app.get("/", (req, res) => {
+  res.send("🔥 RepForge is LIVE on Render");
 });
 
 /* -----------------------------
-   HEALTH CHECK (RENDER DEBUG)
+   HEALTH CHECK (RENDER)
 ------------------------------*/
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
 });
 
 /* -----------------------------
-   OPTIONAL ROUTES (SAFE LOADING)
-   - prevents crash if files missing
+   ROUTES (SAFE LOADING)
+   - prevents crash if any file is missing
 ------------------------------*/
 try {
   app.use('/auth', require('./routes/auth'));
@@ -56,16 +56,15 @@ try {
   app.use('/analytics', require('./routes/analytics'));
   app.use('/ai', require('./routes/ai'));
   app.use('/api', require('./routes/apiProxy'));
-  app.use('/', require('./routes/index'));
 } catch (err) {
-  console.log('⚠️ Route load error:', err.message);
+  console.log("⚠️ Route load issue:", err.message);
 }
 
 /* -----------------------------
    404 HANDLER
 ------------------------------*/
 app.use((req, res) => {
-  res.status(404).send('404 - Page Not Found');
+  res.status(404).send("404 - Page Not Found");
 });
 
 /* -----------------------------
